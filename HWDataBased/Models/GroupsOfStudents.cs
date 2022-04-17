@@ -8,7 +8,7 @@ namespace HWDataBased.Models
 {
     public class GroupsOfStudents
     {
-        public int StudentId{ get; set; }
+        public int StudentId { get; set; }
         public int GroupId { get; set; }
     }
 }

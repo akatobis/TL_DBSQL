@@ -43,7 +43,7 @@ namespace HWDataBased
                     }
                     Console.WriteLine("Введите возраст студента");
                     int age = int.Parse(Console.ReadLine());
-                    while (age < 3)
+                    while ((age < 3) || (age == null))
                     {
                         Console.WriteLine("Убедитесь, что возвраст введён правильно");
                         age = Convert.ToInt32(Console.ReadLine());
@@ -79,10 +79,20 @@ namespace HWDataBased
                     Console.WriteLine("Введие id студента");
                     int studentId = Convert.ToInt32(Console.ReadLine());
                     Student gotStudentId = studentRepository.GetStudentById(studentId);
+                    while (gotStudentId == null)
+                    {
+                        studentId = Convert.ToInt32(Console.ReadLine());
+                        gotStudentId = studentRepository.GetStudentById(studentId);
+                    }
 
                     Console.WriteLine("Введите id группы");
                     int groupId = Convert.ToInt32(Console.ReadLine());
                     Group gotGroupId = groupRepository.GetGroupById(groupId);
+                    while (gotGroupId == null)
+                    {
+                        groupId = Convert.ToInt32(Console.ReadLine());
+                        gotGroupId = groupRepository.GetGroupById(groupId);
+                    }
 
                     List<GroupsOfStudents> studentInGroups = groupsOfStudentRepository.GetStudentAndGroupsById();
 
@@ -93,20 +103,6 @@ namespace HWDataBased
                     });
 
                     Console.WriteLine("Студент успешно добавлен в группу");
-                }
-                else if (command == "print-student-by-id")
-                {
-                    Console.WriteLine("Введие id студента");
-                    int studentId = Convert.ToInt32(Console.ReadLine());
-                    Student student = studentRepository.GetStudentById(studentId);
-                    Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}");
-                }
-                else if (command == "print-group-by-id")
-                {
-                    Console.WriteLine("Введие id группы");
-                    int groupId = Convert.ToInt32(Console.ReadLine());
-                    Group group = groupRepository.GetGroupById(groupId);
-                    Console.WriteLine($"Id: {group.Id}, Name: {group.Name}");
                 }
                 else if (command == "print-groups")
                 {
@@ -126,10 +122,14 @@ namespace HWDataBased
                 } 
                 else if (command == "print-students-by-group-id")
                 {
-                    List<GroupsOfStudents> groupsOfStudents = groupsOfStudentRepository.GetAllStudentByGroupId();
+                    Console.WriteLine("Введите id группы");
+                    int groupsId = Convert.ToInt32(Console.ReadLine());
+                    List<GroupsOfStudents> groupsOfStudents = groupsOfStudentRepository.GetAllStudentByGroupId(groupsId);
                     foreach (GroupsOfStudents groupsOfStudent in groupsOfStudents)
                     {
-                        Console.WriteLine($"Id: {groupsOfStudent.StudentId}");
+                        //Console.WriteLine($"Id: {groupsOfStudent.StudentId}");
+                        Student student = studentRepository.GetStudentById(groupsOfStudent.StudentId);
+                        Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}");
                     }
                 }
             }

@@ -11,6 +11,6 @@ namespace HWDataBased.Repositories
     {
         void AddStudentInGroup(GroupsOfStudents groupsOfStudents);
         List<GroupsOfStudents> GetStudentAndGroupsById();
-        List<GroupsOfStudents> GetAllStudentByGroupId();
+        List<GroupsOfStudents> GetAllStudentByGroupId(int groupsId);
     }
 }

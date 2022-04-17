@@ -24,8 +24,8 @@ namespace HWDataBased.Repositories
                             (@studentId, @groupId)
                         select SCOPE_IDENTITY()";
 
-                    command.Parameters.Add("@studentId", SqlDbType.NVarChar).Value = groupsOfStudents.StudentId;
-                    command.Parameters.Add("@groupId", SqlDbType.NVarChar).Value = groupsOfStudents.GroupId;
+                    command.Parameters.Add("@studentId", SqlDbType.Int).Value = groupsOfStudents.StudentId;
+                    command.Parameters.Add("@groupId", SqlDbType.Int).Value = groupsOfStudents.GroupId;
 
                     command.ExecuteNonQuery();
                 }
@@ -60,7 +60,7 @@ namespace HWDataBased.Repositories
             return result;
         }
 
-        public List<GroupsOfStudents> GetAllStudentByGroupId()
+        public List<GroupsOfStudents> GetAllStudentByGroupId(int groupId)
         {
             var result = new List<GroupsOfStudents>();
 
@@ -73,6 +73,7 @@ namespace HWDataBased.Repositories
                                         from [GroupsOfStudents]
                                         where[GroupsId] = @groupsId";
 
+                    command.Parameters.Add("@groupsId", SqlDbType.Int).Value = groupId;
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
